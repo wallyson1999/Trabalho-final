@@ -1,0 +1,35 @@
+# CI de Nível 01 - Disparo manual a partir de 1 clique
+
+name: 'Execução Manual'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Clonar o projeto
+      - uses: actions/checkout@v4
+
+      # Instalar Node.js
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+
+      # Instalar Yarn
+      - name: Instalando Yarn
+        run: npm install -g yarn
+
+      # Instalar dependências do projeto
+      - name: Instalando dependências
+        run: yarn
+
+      # Instalar navegadores do Playwright
+      - name: Instalando navegadores Playwright
+        run: npx playwright install --with-deps
+
+      # Executar os testes com Mocha
+      - name: Executando testes
+        run: npx mocha test/trabalho-final.js
